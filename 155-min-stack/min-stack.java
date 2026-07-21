@@ -19,8 +19,10 @@ class MinStack {
     }
     
     public void pop() {
-        stack.pop();
-        copiedStack.pop();
+        if (!stack.isEmpty()) {
+          stack.pop();
+          copiedStack.pop();
+        }
     }
     
     public int top() {
