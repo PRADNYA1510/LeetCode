@@ -1,32 +1,22 @@
-class Solution {
+import java.util.HashMap;
+
+public class Solution {
     public int lengthOfLongestSubstring(String s) {
-        // Array to track character frequency in current window (ASCII characters)
-        int[] charFrequency = new int[128];
-      
-        // Initialize variables
-        int maxLength = 0;
-        int stringLength = s.length();
+        HashMap<Character, Integer> charMap = new HashMap<>();
         int left = 0;
-      
-        // Iterate through string with right pointer
-        for (int right = 0; right < stringLength; right++) {
-            // Get current character at right pointer
+        int maxLength = 0;
+        
+        for (int right = 0; right < s.length(); right++) {
             char currentChar = s.charAt(right);
-          
-            // Increment frequency of current character
-            charFrequency[currentChar]++;
-          
-            // Shrink window from left while we have duplicate characters
-            while (charFrequency[currentChar] > 1) {
-                // Decrement frequency of character at left pointer and move left pointer
-                charFrequency[s.charAt(left)]--;
-                left++;
+            
+            if (charMap.containsKey(currentChar) && charMap.get(currentChar) >= left) {
+                left = charMap.get(currentChar) + 1;
             }
-          
-            // Update maximum length of substring without repeating characters
+            
+            charMap.put(currentChar, right);
             maxLength = Math.max(maxLength, right - left + 1);
         }
-      
+        
         return maxLength;
     }
 }
